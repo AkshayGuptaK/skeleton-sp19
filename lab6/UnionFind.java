@@ -82,9 +82,11 @@ public class UnionFind {
 
 	if (size1 > size2) {
 	    disjointSet[parent2] = parent1;
+	    disjointSet[parent1] = -(size1 + size2);
 	}
 	else {
 	    disjointSet[parent1] = parent2;
+	    disjointSet[parent2] = -(size1 + size2);
 	}
     }
 
