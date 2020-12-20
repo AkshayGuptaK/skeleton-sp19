@@ -172,6 +172,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
       return null;
     V val = node.value;
     deleteNode(node);
+    size--;
     return val;
   }
 
@@ -181,6 +182,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     if (node == null || node.value != value)
       return null;
     deleteNode(node);
+    size--;
     return value;
   }
 
