@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /**
  * Solver for the Flight problem (#9) from CS 61B Spring 2018 Midterm 2.
@@ -8,13 +10,38 @@ import java.util.ArrayList;
  */
 public class FlightSolver {
 
-    public FlightSolver(ArrayList<Flight> flights) {
-        /* FIX ME */
-    }
+  private PriorityQueue<Flight> flightsByDeparture;
+  private PriorityQueue<Flight> flightsByLanding;
 
-    public int solve() {
-        /* FIX ME */
-        return -1;
+  public FlightSolver(ArrayList<Flight> flights) {
+    Comparator<Flight> compareByStart = (f1, f2) -> f1.startTime - f2.startTime;
+    Comparator<Flight> compareByEnd = (f1, f2) -> f1.endTime - f2.endTime;
+    flightsByDeparture =
+        new PriorityQueue<Flight>(flights.size(), compareByStart);
+    flightsByLanding = new PriorityQueue<Flight>(flights.size(), compareByEnd);
+    for (Flight flight : flights) {
+      flightsByDeparture.add(flight);
+      flightsByLanding.add(flight);
     }
+  }
 
+  public int solve() {
+    int mostPassengers = 0;
+    int currentPassengers = 0;
+    Flight nextDeparting = flightsByDeparture.poll();
+    Flight nextLanding = flightsByLanding.poll();
+    while (nextLanding != null) {
+      if (nextDeparting == null ||
+          nextDeparting.startTime > nextLanding.endTime) {
+        currentPassengers -= nextLanding.passengers;
+        nextLanding = flightsByLanding.poll();
+      } else {
+        currentPassengers += nextDeparting.passengers;
+        if (currentPassengers > mostPassengers)
+          mostPassengers = currentPassengers;
+        nextDeparting = flightsByDeparture.poll();
+      }
+    }
+    return mostPassengers;
+  }
 }
