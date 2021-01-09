@@ -4,11 +4,11 @@ public class BubbleGrid {
     private int[][] grid;
     private int rows;
     private int columns;
-    
+
     public BubbleGrid(int[][] g) {
-	grid = g;
-	rows = g.length;
-	columns = g[0].length;
+        grid = g;
+        rows = g.length;
+        columns = g[0].length;
     }
 
     private LinkedList<int[]> removeBubblesFromGrid(int[][] darts) {
@@ -32,8 +32,8 @@ public class BubbleGrid {
     }
 
     private UnionFind connectRight(disjointSet){
-        for (int i=0; i++; i < rows) {
-            for (int j=0; j++; j < columns - 1) {
+        for (int i=0; i < rows; i++) {
+            for (int j=0; j < columns - 1; j++) {
                 if (isBubbleAt(i,j) && isBubbleAt(i, j+1)) {
                     disjointSet.union(convertGridCoordtoSetIndex(i,j), convertGridCoordtoSetIndex(i,j+1));
                 }
@@ -43,8 +43,8 @@ public class BubbleGrid {
     }
 
     private UnionFind connectDown(disjointSet){
-        for (int i=0; i++; i < rows - 1) {
-            for (int j=0; j++; j < columns) {
+        for (int i=0; i < rows - 1; i++) {
+            for (int j=0; j < columns; j++) {
                 if (isBubbleAt(i,j) && isBubbleAt(i+1, j)) {
                     disjointSet.union(convertGridCoordtoSetIndex(i,j), convertGridCoordtoSetIndex(i+1,j));
                 }
@@ -53,11 +53,11 @@ public class BubbleGrid {
         return disjointSet;
     }
 
-   private UnionFind disjointSetFromGrid() {
-	UnionFind disjointSet = new UnionFind(rows * columns);
-    disjointSet = connectRight(disjointSet);
-    disjointSet = connectDown(disjointSet);
-    return disjointSet;
+    private UnionFind disjointSetFromGrid() {
+        UnionFind disjointSet = new UnionFind(rows * columns);
+        disjointSet = connectRight(disjointSet);
+        disjointSet = connectDown(disjointSet);
+        return disjointSet;
     }
 
     private boolean isRooted(UnionFind disjointSet, int v) {
@@ -75,25 +75,30 @@ public class BubbleGrid {
     }
 
     private int fallenBubblesForDart(UnionFind disjointSet, int[] dart) {
-        if (dart[2] == 0) return 0;
+        if (dart[2] == 0)
+            return 0;
         int row = dart[0];
         int column = dart[1];
-        if (row > 0) {} // check above
-        if (column > 0) {} // check left
-        if (row < rows - 1) {} // check below
-        if (column < columns - 1) {} // check right
-        // connect this int to any other bubbles
-        // check sizes
+        if (row > 0) {
+        } // check above
+        if (column > 0) {
+        } // check left
+        if (row < rows - 1) {
+        } // check below
+        if (column < columns - 1) {
+        } // check right
+          // connect this int to any other bubbles
+          // check sizes
     }
 
     public int[] popBubbles(int[][] darts) {
         int[] fallenBubbles = new int[darts.length];
         LinkedList<int[]> newDarts = removeBubblesFromGrid(darts);
-	UnionFind disjointSet = disjointSetFromGrid();
-	for (int i = 0; i++; i < newDarts.length) {
-	    fallenBubbles[i] = fallenBubblesForDart(disjointSet, newDarts[i]);
-	}
-	return fallenBubbles;
+        UnionFind disjointSet = disjointSetFromGrid();
+        for (int i = 0; i < newDarts.length; i++) {
+            fallenBubbles[i] = fallenBubblesForDart(disjointSet, newDarts[i]);
+        }
+        return fallenBubbles;
     }
 
     public static void main(String[] args) {
