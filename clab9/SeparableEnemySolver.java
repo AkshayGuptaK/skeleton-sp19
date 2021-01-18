@@ -50,7 +50,6 @@ public class SeparableEnemySolver {
   }
   // can also use a disjoint set, and connect all enemies per vertex
   // and then query if vertex is connected to one of its enemies
-  // what about if you can use three groups??
 
   /* HELPERS FOR READING IN CSV FILES. */
 
